@@ -48,7 +48,7 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	DeleteJobResponse struct {
-		DeleteJobID func(childComplexity int) int
+		DeletedJobID func(childComplexity int) int
 	}
 
 	JobListing struct {
@@ -62,7 +62,7 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CreateJobListing func(childComplexity int, input model.CreateJobListingInput) int
 		DeleteJobListing func(childComplexity int, id string) int
-		UpdateJobListong func(childComplexity int, id string, input model.UpdateJobListingInput) int
+		UpdateJobListing func(childComplexity int, id string, input model.UpdateJobListingInput) int
 	}
 
 	Query struct {
@@ -73,7 +73,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	CreateJobListing(ctx context.Context, input model.CreateJobListingInput) (*model.JobListing, error)
-	UpdateJobListong(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error)
+	UpdateJobListing(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error)
 	DeleteJobListing(ctx context.Context, id string) (*model.DeleteJobResponse, error)
 }
 type QueryResolver interface {
@@ -100,12 +100,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 	_ = ec
 	switch typeName + "." + field {
 
-	case "DeleteJobResponse.deleteJobId":
-		if e.complexity.DeleteJobResponse.DeleteJobID == nil {
+	case "DeleteJobResponse.deletedJobId":
+		if e.complexity.DeleteJobResponse.DeletedJobID == nil {
 			break
 		}
 
-		return e.complexity.DeleteJobResponse.DeleteJobID(childComplexity), true
+		return e.complexity.DeleteJobResponse.DeletedJobID(childComplexity), true
 
 	case "JobListing.company":
 		if e.complexity.JobListing.Company == nil {
@@ -166,17 +166,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.complexity.Mutation.DeleteJobListing(childComplexity, args["id"].(string)), true
 
-	case "Mutation.updateJobListong":
-		if e.complexity.Mutation.UpdateJobListong == nil {
+	case "Mutation.updateJobListing":
+		if e.complexity.Mutation.UpdateJobListing == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updateJobListong_args(ctx, rawArgs)
+		args, err := ec.field_Mutation_updateJobListing_args(ctx, rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateJobListong(childComplexity, args["id"].(string), args["input"].(model.UpdateJobListingInput)), true
+		return e.complexity.Mutation.UpdateJobListing(childComplexity, args["id"].(string), args["input"].(model.UpdateJobListingInput)), true
 
 	case "Query.job":
 		if e.complexity.Query.Job == nil {
@@ -369,22 +369,22 @@ func (ec *executionContext) field_Mutation_deleteJobListing_argsID(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_updateJobListong_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+func (ec *executionContext) field_Mutation_updateJobListing_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
-	arg0, err := ec.field_Mutation_updateJobListong_argsID(ctx, rawArgs)
+	arg0, err := ec.field_Mutation_updateJobListing_argsID(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["id"] = arg0
-	arg1, err := ec.field_Mutation_updateJobListong_argsInput(ctx, rawArgs)
+	arg1, err := ec.field_Mutation_updateJobListing_argsInput(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["input"] = arg1
 	return args, nil
 }
-func (ec *executionContext) field_Mutation_updateJobListong_argsID(
+func (ec *executionContext) field_Mutation_updateJobListing_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
 ) (string, error) {
@@ -397,7 +397,7 @@ func (ec *executionContext) field_Mutation_updateJobListong_argsID(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_updateJobListong_argsInput(
+func (ec *executionContext) field_Mutation_updateJobListing_argsInput(
 	ctx context.Context,
 	rawArgs map[string]any,
 ) (model.UpdateJobListingInput, error) {
@@ -556,8 +556,8 @@ func (ec *executionContext) field___Type_fields_argsIncludeDeprecated(
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _DeleteJobResponse_deleteJobId(ctx context.Context, field graphql.CollectedField, obj *model.DeleteJobResponse) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_DeleteJobResponse_deleteJobId(ctx, field)
+func (ec *executionContext) _DeleteJobResponse_deletedJobId(ctx context.Context, field graphql.CollectedField, obj *model.DeleteJobResponse) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DeleteJobResponse_deletedJobId(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -570,7 +570,7 @@ func (ec *executionContext) _DeleteJobResponse_deleteJobId(ctx context.Context, 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.DeleteJobID, nil
+		return obj.DeletedJobID, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -587,7 +587,7 @@ func (ec *executionContext) _DeleteJobResponse_deleteJobId(ctx context.Context, 
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_DeleteJobResponse_deleteJobId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_DeleteJobResponse_deletedJobId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "DeleteJobResponse",
 		Field:      field,
@@ -887,8 +887,8 @@ func (ec *executionContext) fieldContext_Mutation_createJobListing(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateJobListong(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateJobListong(ctx, field)
+func (ec *executionContext) _Mutation_updateJobListing(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateJobListing(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -901,7 +901,7 @@ func (ec *executionContext) _Mutation_updateJobListong(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateJobListong(rctx, fc.Args["id"].(string), fc.Args["input"].(model.UpdateJobListingInput))
+		return ec.resolvers.Mutation().UpdateJobListing(rctx, fc.Args["id"].(string), fc.Args["input"].(model.UpdateJobListingInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -918,7 +918,7 @@ func (ec *executionContext) _Mutation_updateJobListong(ctx context.Context, fiel
 	return ec.marshalNJobListing2ᚖgithubᚗcomᚋadityaadpandeyᚋgoᚑgplᚋgraphᚋmodelᚐJobListing(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updateJobListong(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateJobListing(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -947,7 +947,7 @@ func (ec *executionContext) fieldContext_Mutation_updateJobListong(ctx context.C
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateJobListong_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateJobListing_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -993,8 +993,8 @@ func (ec *executionContext) fieldContext_Mutation_deleteJobListing(ctx context.C
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "deleteJobId":
-				return ec.fieldContext_DeleteJobResponse_deleteJobId(ctx, field)
+			case "deletedJobId":
+				return ec.fieldContext_DeleteJobResponse_deletedJobId(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type DeleteJobResponse", field.Name)
 		},
@@ -3282,21 +3282,21 @@ func (ec *executionContext) unmarshalInputUpdateJobListingInput(ctx context.Cont
 		switch k {
 		case "title":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.Title = data
 		case "description":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.Description = data
 		case "url":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3326,8 +3326,8 @@ func (ec *executionContext) _DeleteJobResponse(ctx context.Context, sel ast.Sele
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("DeleteJobResponse")
-		case "deleteJobId":
-			out.Values[i] = ec._DeleteJobResponse_deleteJobId(ctx, field, obj)
+		case "deletedJobId":
+			out.Values[i] = ec._DeleteJobResponse_deletedJobId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -3439,9 +3439,9 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updateJobListong":
+		case "updateJobListing":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateJobListong(ctx, field)
+				return ec._Mutation_updateJobListing(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

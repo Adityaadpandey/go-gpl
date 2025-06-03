@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/adityaadpandey/go-gpl/database"
 	"github.com/adityaadpandey/go-gpl/graph/model"
@@ -18,9 +19,9 @@ func (r *mutationResolver) CreateJobListing(ctx context.Context, input model.Cre
 	return db.CreateJobListing(input), nil
 }
 
-// UpdateJobListong is the resolver for the updateJobListong field.
-func (r *mutationResolver) UpdateJobListong(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error) {
-	return db.UpdateJobListing(id, input), nil
+// UpdateJobListing is the resolver for the updateJobListing field.
+func (r *mutationResolver) UpdateJobListing(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error) {
+	panic(fmt.Errorf("not implemented: UpdateJobListing - updateJobListing"))
 }
 
 // DeleteJobListing is the resolver for the deleteJobListing field.
@@ -46,3 +47,16 @@ func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+/*
+	var db = database.Connect()
+func (r *mutationResolver) UpdateJobListong(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error) {
+	return db.UpdateJobListing(id, input), nil
+}
+*/

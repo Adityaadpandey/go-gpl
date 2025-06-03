@@ -10,7 +10,7 @@ type CreateJobListingInput struct {
 }
 
 type DeleteJobResponse struct {
-	DeleteJobID string `json:"deleteJobId"`
+	DeletedJobID string `json:"deletedJobId"`
 }
 
 type JobListing struct {
@@ -28,7 +28,7 @@ type Query struct {
 }
 
 type UpdateJobListingInput struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	URL         string `json:"url"`
+	Title       *string `json:"title,omitempty"`
+	Description *string `json:"description,omitempty"`
+	URL         *string `json:"url,omitempty"`
 }
